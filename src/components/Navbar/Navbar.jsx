@@ -6,22 +6,22 @@ import ResponsiveMenu from "./ResponsiveMenu";
 export const Navlinks = [
   {
     id: 1,
-    name: "HOME",
+    name: "Početna",
     link: "/#",
   },
   {
     id: 2,
-    name: "CARS",
+    name: "Automobili",
     link: "/#cars",
   },
   {
-    id: 1,
-    name: "ABOUT",
+    id: 3,
+    name: "O Nama",
     link: "/#about",
   },
   {
-    id: 1,
-    name: "BOOKING",
+    id: 4,
+    name: "Log In",
     link: "/#booking",
   },
 ];
@@ -33,10 +33,8 @@ const Navbar = ({ theme, setTheme }) => {
   };
   return (
     <div
-      className="relative z-10 shadow-md w-full dark:bg-black dark:text-white duration-300
-    "
-    >
-      <div className="container py-2 md:py-0">
+      className="relative z-10 shadow-md w-full dark:bg-black dark:text-white duration-300">
+      <div className="container py-2 md:py-4">
         <div className="flex justify-between items-center">
           <div>
             <span className="text-3xl font-bold font-serif">Car Rental</span>
@@ -53,34 +51,10 @@ const Navbar = ({ theme, setTheme }) => {
                   </a>
                 </li>
               ))}
-              {/* DarkMode feature implement */}
-              {theme === "dark" ? (
-                <BiSolidSun
-                  onClick={() => setTheme("light")}
-                  className="text-2xl"
-                />
-              ) : (
-                <BiSolidMoon
-                  onClick={() => setTheme("dark")}
-                  className="text-2xl"
-                />
-              )}
             </ul>
           </nav>
           {/* Mobile view  */}
           <div className="flex items-center gap-4 md:hidden ">
-            {/* dark  mode */}
-            {theme === "dark" ? (
-              <BiSolidSun
-                onClick={() => setTheme("light")}
-                className="text-2xl"
-              />
-            ) : (
-              <BiSolidMoon
-                onClick={() => setTheme("dark")}
-                className="text-2xl"
-              />
-            )}
             {/* Mobile Hamburger icon */}
             {showMenu ? (
               <HiMenuAlt1
@@ -98,7 +72,7 @@ const Navbar = ({ theme, setTheme }) => {
           </div>
         </div>
       </div>
-      <ResponsiveMenu showMenu={showMenu} />
+      <ResponsiveMenu showMenu={showMenu} toggleMenu={toggleMenu}/>
     </div>
   );
 };

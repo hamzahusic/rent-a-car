@@ -2,21 +2,21 @@ import React from "react";
 
 const testimonialData = [
   {
-    name: "Dilshad",
-    image: "",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    name: "Asmir",
+    image: "https://picsum.photos/200?random=1",
+    description: "Cijene su bile konkurentne, a automobil koji sam iznajmio bio je upravo ono što mi je trebalo za putovanje.",
     aosDelay: "0",
   },
   {
-    name: "Satya",
-    image: "",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    name: "Nikola",
+    image: "https://picsum.photos/200?random=2",
+    description: "Brza i jednostavna procedura iznajmljivanja, a automobil je bio udoban i pouzdan.",
     aosDelay: "300",
   },
   {
-    name: "Sabir",
-    image: "",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    name: "Amar",
+    image: "https://picsum.photos/200?random=3",
+    description: "Oduševljen sam fleksibilnošću i ponudom vozila. Svakako ću se vratiti kod njih kada ponovno budem trebao automobil.",
     aosDelay: "1000",
   },
 ];
@@ -32,11 +32,10 @@ const Testimonial = () => {
               data-aos="fade-up"
               className="text-3xl font-semibold text-center sm:text-4xl font-serif"
             >
-              What Our Clients Say About Us
+              Naši klijenti o nama
             </p>
             <p data-aos="fade-up" className="text-center sm:px-44">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Perferendis iure consectetur tempora amet.
+            "Ovdje se nalaze autentične recenzije i utisci ljudi koji su koristili naše usluge." 
             </p>
           </div>
 
@@ -46,13 +45,13 @@ const Testimonial = () => {
                 key={skill.name}
                 data-aos="fade-up"
                 data-aos-delay={skill.aosDelay}
-                className="card text-center group space-y-3 sm:space-y-6 p-4 sm:py-12 dark:bg-white/20 bg-gray-100 duration-300  rounded-lg "
+                className="card text-center group space-y-3 sm:space-y-6 p-4 sm:py-12 dark:bg-white/10 bg-gray-100 duration-300  rounded-lg "
               >
                 <div className="grid place-items-center ">
                   <img
-                    src="https://picsum.photos/200"
+                    src={skill.image}
                     alt=""
-                    className="rounded-full w-20 h-20"
+                    className="rounded-full w-20 h-20 object-cover"
                   />
                 </div>
                 <div className="text-2xl">⭐⭐⭐⭐⭐</div>

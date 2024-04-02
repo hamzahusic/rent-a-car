@@ -33,11 +33,10 @@ const CarList = () => {
           data-aos="fade-up"
           className="text-3xl sm:text-4xl font-semibold font-serif mb-3"
         >
-          Lorem ipsum dolor
+          Popularni modeli
         </h1>
         <p data-aos="fade-up" aos-delay="400" className="text-sm pb-10">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor iure
-          nemo ab?
+          Ovo su neki modeli koje naši klijenti najčešće biraju
         </p>
         {/* Car listing */}
         <div>
@@ -72,7 +71,7 @@ const CarList = () => {
         {/* End of car listing */}
         <div className="grid place-items-center mt-8">
           <button data-aos="fade-up" className="button-outline">
-            Get Started
+            Pogledaj više
           </button>
         </div>
       </div>
