@@ -69,9 +69,7 @@ const AllCars = () => {
             <div className='mt-10'>
                 <CarList showBtn={false} carList={carList}/>
             </div>
-            <div className=' text-white'>
-                <Footer/>
-            </div>
+            <Footer/>
         </div>
      );
 }

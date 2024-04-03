@@ -8,6 +8,7 @@ import Home from "./pages/home";
 import LogIn from './pages/login'
 import Register from './pages/register'
 import AllCars from "./pages/cars";
+import CarPost from "./pages/car";
 const App = () => {
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/login" element={<LogIn />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cars" element={<AllCars />} />
+          <Route path="/car/:id" element={<CarPost />} />
         </Routes>
       </BrowserRouter>
     </div>
