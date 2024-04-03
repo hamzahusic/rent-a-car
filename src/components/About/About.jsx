@@ -22,7 +22,7 @@ const About = () => {
                 O Nama
               </h1>
               <p data-aos="fade-up" className="leading-8 tracking-wide">
-              CarRental je specijalizirana kompanija koja se bavi iznajmljivanjem putničkih automobila u cijeloj Bosni i Hercegovini. Na Vaš zahtjev dostavićemo Vam vozilo na bilo koju adresu u Tuzli, a na kraju najma ćemo preuzeti iznajmljeno vozila sa lokacije koja Vama najviše odgovara. I sve to naravno besplatno! Uslugu dostave i preuzimanja pružamo i izvan Tuzle, uz doplatu. Neophodna je rezervacija i dogovor.
+              Car Rental je specijalizirana kompanija koja se bavi iznajmljivanjem putničkih automobila u cijeloj Bosni i Hercegovini. Na Vaš zahtjev dostavićemo Vam vozilo na bilo koju adresu u Tuzli, a na kraju najma ćemo preuzeti iznajmljeno vozila sa lokacije koja Vama najviše odgovara. I sve to naravno besplatno! Uslugu dostave i preuzimanja pružamo i izvan Tuzle, uz doplatu. Neophodna je rezervacija i dogovor.
               </p>
               <button data-aos="fade-up" className="button-outline text-white">
                 Iznajmite automobil

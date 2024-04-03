@@ -1,16 +1,13 @@
-import { Component, useEffect, useState } from "react";
+import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Component import
-import Navbar from "./components/Navbar/Navbar";
-import Hero from "./components/Hero/Hero";
-import About from "./components/About/About";
-import Services from "./components/Services/Services";
-import CarList from "./components/CarList/CarList";
-import Testimonial from "./components/Testimonial/Testimonial";
-import Footer from "./components/Footer/Footer";
-
+import Home from "./pages/home";
+import LogIn from './pages/login'
+import Register from './pages/register'
+import AllCars from "./pages/cars";
 const App = () => {
 
   useEffect(() => {
@@ -23,14 +20,15 @@ const App = () => {
     });
   }, []);
   return (
-    <div className="bg-white dark:bg-black dark:text-white text-black overflow-x-hidden dark">
-      <Navbar />
-      <Hero />
-      <About />
-      <Services />
-      <CarList />
-      <Testimonial />
-      <Footer />
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/cars" element={<AllCars />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };

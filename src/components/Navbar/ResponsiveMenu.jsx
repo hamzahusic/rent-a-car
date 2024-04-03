@@ -1,5 +1,6 @@
 import React from "react";
 import { Navlinks } from "./Navbar";
+import { Link } from "react-router-dom";
 
 const ResponsiveMenu = ({ showMenu , toggleMenu}) => {
   return (
@@ -14,9 +15,9 @@ const ResponsiveMenu = ({ showMenu , toggleMenu}) => {
           <ul className="space-y-4 text-xl">
             {Navlinks.map((data) => (
               <li key={data.link}>
-                <a href={data.link} className="mb-5 inline-block" onClick={toggleMenu}>
+                <Link to={data.link} className="mb-5 inline-block" onClick={toggleMenu}>
                   {data.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

@@ -35,7 +35,7 @@ const Testimonial = () => {
               Naši klijenti o nama
             </p>
             <p data-aos="fade-up" className="text-center sm:px-44">
-            "Ovdje se nalaze autentične recenzije i utisci ljudi koji su koristili naše usluge." 
+            Ovdje se nalaze autentične recenzije i utisci klijenata koji su koristili naše usluge. 
             </p>
           </div>
 
