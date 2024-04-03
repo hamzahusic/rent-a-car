@@ -9,6 +9,8 @@ import LogIn from './pages/login'
 import Register from './pages/register'
 import AllCars from "./pages/cars";
 import CarPost from "./pages/car";
+import AddCarForm from "./pages/AddCar";
+import EditCarForm from "./pages/EditCar";
 const App = () => {
 
   useEffect(() => {
@@ -29,6 +31,8 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/cars" element={<AllCars />} />
           <Route path="/car/:id" element={<CarPost />} />
+          <Route path="/admin/add" element={<AddCarForm />} />
+          <Route path="/admin/edit/:id" element={<EditCarForm />} />
         </Routes>
       </BrowserRouter>
     </div>
