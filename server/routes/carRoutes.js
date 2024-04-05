@@ -1,5 +1,5 @@
 const express = require("express");
-const mysqlPool = require('../db/connection');
+const mysqlPool = require('../connection');
 const multer = require("multer");
 const router = express.Router();
 const fs = require("fs");
