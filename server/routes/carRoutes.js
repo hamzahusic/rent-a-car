@@ -22,7 +22,7 @@ router.post('/',uploadStorage.single("slika"), async (req,res) => {
     try {
         const {naziv,proizvodjac,mjesta,transmisija,pogon,opis,cijena,idKategorija,idKorisnik} = req.body;
 
-        const sql = "INSERT INTO objava (naziv,proizvodjac,mjesta,transmisija,pogon,opis,slika,cijena_po_danu,kategorija_id,korisnik_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        const sql = "INSERT INTO automobil (naziv,proizvodjac,mjesta,transmisija,pogon,opis,slika,cijena_po_danu,kategorija_id,korisnik_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
     
         mysqlPool.query(sql,[naziv,proizvodjac,mjesta,transmisija,pogon,opis,req.file.filename,cijena,idKategorija,idKorisnik], (err,result) => {
             if (err) {
@@ -49,7 +49,7 @@ router.get('/car/:id', async (req,res) => {
     try {
         const {id} = req.params;
     
-        const sql = "SELECT automobil.id,automobil.naziv,automobil.proizvodjac,automobil.mjesta,automobil.transmisija,automobil.pogon,automobil.opis,automobil.slika,automobil.cijena_po_danu, kategorija.naziv as kategorija FROM automobil INNER JOIN kategorija ON automobil.kategorija_id = kategorija.id WHERE automobil.id = ?";
+        const sql = "SELECT automobil.id,automobil.naziv,automobil.proizvodjac,automobil.mjesta,automobil.transmisija,automobil.pogon,automobil.opis,automobil.slika,automobil.cijena_po_danu, kategorija.naziv as kategorija, kategorija.id as kategorija_id FROM automobil INNER JOIN kategorija ON automobil.kategorija_id = kategorija.id WHERE automobil.id = ?;";
     
         mysqlPool.query(sql,[id], (err,result) => {
             if (err) {
@@ -72,14 +72,14 @@ router.get('/car/:id', async (req,res) => {
 router.get('/all', async (req,res) => {
     try {
 
-        const sql = "SELECT idObjava, naslov, sadrzaj,datum_objave,putanja_slike,kategorija_idKategorija as kategorija,ime,prezime,naziv as naziv_kategorije FROM objava INNER JOIN korisnik ON korisnik_idKorisnik = idKorisnik INNER JOIN kategorija ON kategorija_idKategorija = idKategorija;";
+        const sql = "SELECT automobil.id,automobil.naziv,automobil.proizvodjac,automobil.mjesta,automobil.transmisija,automobil.pogon,automobil.opis,automobil.slika,automobil.cijena_po_danu, kategorija.naziv as kategorija, kategorija.id as kategorija_id FROM automobil INNER JOIN kategorija ON automobil.kategorija_id = kategorija.id;";
     
         mysqlPool.query(sql, (err,result) => {
             if (err) {
                 console.error(err);
-                return res.status(500).send('Error updating objava');
+                return res.status(500).send('Greška prilikom dobijanja svih automobila');
             } else {
-                return res.status(200).json({ message: 'objava selected successfully', "Data": result });
+                return res.status(200).json({ message: 'Automobil selected successfully', data: result });
             }
         })
     } catch (error) {
@@ -89,9 +89,9 @@ router.get('/all', async (req,res) => {
 })
 
 //UPDATE OBJAVU
-router.put('/',uploadStorage.single("putanja_slike"), async (req,res) => {
+router.put('/',uploadStorage.single("slika"), async (req,res) => {
     try {
-        const {naslov,sadrzaj,datum_objave,kategorija,idObjava,stara_slika} = req.body;
+        const {idAutomobil,naziv,proizvodjac,mjesta,transmisija,pogon,opis,cijena,idKategorija,idKorisnik} = req.body;
         
         if(req.file){
             try {
@@ -104,14 +104,14 @@ router.put('/',uploadStorage.single("putanja_slike"), async (req,res) => {
             req.file = { filename: stara_slika };
         }
 
-        const sql = "UPDATE objava SET naslov = ?, sadrzaj = ?, datum_objave = ?, kategorija_idKategorija = ?, putanja_slike = ? WHERE idObjava = ?; ";
+        const sql = "UPDATE automobil SET naziv = ?, proizvodjac = ?, mjesta = ?, transmisija = ?, pogon = ?, slika = ?, cijena_po_danu = ?, opis = ?, kategorija_id = ?, korisnik_id = ? WHERE id = ?; ";
     
-        mysqlPool.query(sql,[naslov,sadrzaj,datum_objave,kategorija,req.file.filename,idObjava], (err,result) => {
+        mysqlPool.query(sql,[naziv,proizvodjac,mjesta,transmisija,pogon,req.file.filename,cijena,opis,idKategorija,idKorisnik,idAutomobil], (err,result) => {
             if (err) {
                 console.error(err);
-                return res.status(500).send('Error updating objava');
+                return res.status(500).send('Greška prilikom izmjene podataka automobila');
             } else {
-                return res.status(200).json({ message: 'objava updated successfully', "Data": result });
+                return res.status(200).json({ message: 'Automobil updated successfully', data: result });
             }
         })
     } catch (error) {
@@ -123,21 +123,21 @@ router.put('/',uploadStorage.single("putanja_slike"), async (req,res) => {
 //DELETE OBJAVU
 router.delete('/', async (req,res) => {
     try {
-        const {idObjava,ime_slike} = req.body;
+        const {id,slika} = req.body;
     
-        const sql = "DELETE FROM objava WHERE idObjava = ?;";
+        const sql = "DELETE FROM automobil WHERE id = ?;";
     
-        mysqlPool.query(sql,[idObjava], (err,result) => {
+        mysqlPool.query(sql,[id], (err,result) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error deleting objava');
             } else {
                 try {
-                    fs.unlinkSync(`../client/public/uploads/${ime_slike}`);
+                    fs.unlinkSync(`../client/public/uploads/${slika}`);
                 } catch (error) {
-                    console.log("No image found!");
+                    console.log("Fotografija nije pronađena!");
                 }
-                return res.status(200).json({ message: 'objava deleted successfully', "Record deleted": result });
+                return res.status(200).json({ message: 'Automobil deleted successfully', "Record deleted": result });
             }
         })
     } catch (error) {
