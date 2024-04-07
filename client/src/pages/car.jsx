@@ -91,8 +91,8 @@ const CarPost = () => {
     return ( 
         <div>
             <Navbar/>
-            <div className='container flex flex-col lg:flex-row items-center my-20 md:my-44'>
-                <img src={'/uploads/' + carData.slika} alt="" className='max-w-[600px]' />
+            <div className='container flex flex-col lg:flex-row items-center my-20 md:my-44 lg:gap-10'>
+                <img src={'/uploads/' + carData.slika} alt="" className=' max-w-[300px] lg:max-w-[600px]' />
                 <div>
                     <h2 className=' font-bold text-4xl'>{carData.naziv}</h2>
                     {user && user.uloga == "admin" &&<div className=' flex items-center gap-3 mt-2'>

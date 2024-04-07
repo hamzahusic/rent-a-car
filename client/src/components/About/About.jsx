@@ -7,14 +7,14 @@ const About = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-black sm:grid sm:place-items-center duration-300 py-20">
+    <div className="bg-black sm:grid sm:place-items-center duration-300 pb-20 pt-10 md:pt-20">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 place-items-center">
           <div data-aos="slide-right" data-aos-duration="1000">
             <img
               src={AboutPng}
               alt=""
-              className="md:-translate-x-11 max-w-[450px] p-5"
+              className="md:-translate-x-11 w-[450px] h-[220px] md:w-auto md:h-auto object-cover md:max-w-[450px] p-5"
             />
           </div>
           <div>

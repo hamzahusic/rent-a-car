@@ -9,20 +9,16 @@ import {
 
 const FooterLinks = [
   {
-    title: "Home",
+    title: "Početna",
     link: "/#",
   },
   {
-    title: "About",
+    title: "O nama",
     link: "/#about",
   },
   {
-    title: "Contact",
+    title: "Automobili",
     link: "/#contact",
-  },
-  {
-    title: "Blog",
-    link: "/#blog",
   },
 ];
 const Footer = () => {
@@ -80,31 +76,39 @@ const Footer = () => {
             <div className="">
               <div className="py-8 px-4 ">
                 <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">
-                  Links
+                  Socijalne Mreže
                 </h1>
                 <ul className="flex flex-col gap-3">
-                  {FooterLinks.map((link) => (
-                    <li key={link.title} className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-500 dark:text-gray-200">
+                  <li className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-500 dark:text-gray-200">
                       <span>&#11162;</span>
-                      <span>{link.title}</span>
-                    </li>
-                  ))}
+                      <span>Instagram</span>
+                  </li>
+                  <li className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-500 dark:text-gray-200">
+                      <span>&#11162;</span>
+                      <span>Twitter</span>
+                  </li>
+                  <li className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-500 dark:text-gray-200">
+                      <span>&#11162;</span>
+                      <span>Facebook</span>
+                  </li>
                 </ul>
               </div>
             </div>
             <div className="">
               <div className="py-8 px-4 ">
                 <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">
-                  Location
+                  Ostalo
                 </h1>
                 {/* <ul className="list-disc list-inside"> */}
                 <ul className="flex flex-col gap-3">
-                  {FooterLinks.map((link) => (
-                    <li key={link.title} className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-500 dark:text-gray-200">
+                  <li className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-500 dark:text-gray-200">
                       <span>&#11162;</span>
-                      <span>{link.title}</span>
-                    </li>
-                  ))}
+                      <span>Pravila korištenja</span>
+                  </li>
+                  <li className="cursor-pointer hover:translate-x-1 duration-300 hover:!text-primary space-x-1 text-gray-500 dark:text-gray-200">
+                      <span>&#11162;</span>
+                      <span>Sve lokacije</span>
+                  </li>
                 </ul>
               </div>
             </div>
