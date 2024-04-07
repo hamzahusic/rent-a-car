@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import UserContext from '../context/userContext'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 const AddCarForm = () => {
 
@@ -89,7 +90,10 @@ const AddCarForm = () => {
 
   return (
     <div className="container mx-auto mb-10">
-      <h2 className="text-4xl font-semibold my-7">Add Car</h2>
+      <div className=' flex items-center justify-between flex-wrap'>
+        <h2 className="text-4xl font-semibold my-7">Add Car</h2>
+        <Link to={"/"} className=' text-base bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>Nazad na početnu</Link>
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-sm font-medium mb-1">Name of Car:</label>

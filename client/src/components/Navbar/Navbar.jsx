@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { HiMenuAlt3, HiMenuAlt1 } from "react-icons/hi";
+import { HashLink } from 'react-router-hash-link';
 import ResponsiveMenu from "./ResponsiveMenu";
 import { Link } from "react-router-dom";
 import UserContext from "../../context/userContext";
@@ -42,12 +43,13 @@ const Navbar = () => {
               </li>
 
               <li className="py-4">
-                  <Link
+                  <HashLink
                     to={"/#about"}
+                    smooth
                     className=" text-lg font-medium  hover:text-primary py-2 hover:border-b-2 hover:border-primary transition-colors duration-500"
                   >
                     O Nama
-                  </Link>
+                  </HashLink>
               </li>
 
               {Object.keys(user).length !== 0 && user.uloga === "admin" && <li className="py-4">

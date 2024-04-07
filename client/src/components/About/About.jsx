@@ -8,7 +8,7 @@ const About = () => {
 
   return (
     <div className="bg-black sm:grid sm:place-items-center duration-300 pb-20 pt-10 md:pt-20">
-      <div className="container">
+      <div className="container" id="about">
         <div className="grid grid-cols-1 md:grid-cols-2 place-items-center">
           <div data-aos="slide-right" data-aos-duration="1000">
             <img

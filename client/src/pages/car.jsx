@@ -137,7 +137,7 @@ const CarPost = () => {
                                 {error && <VscError  size={110} className=' text-red-500 text-center w-full'/>}
                                 <h2 className=' font-semibold pt-4 text-xl'>{error ? "Unesite validne datume!" :"Uspješno iznajmljen automobil!"} </h2>
                                 {!error && <p className=' text-sm text-center'>(Uskoro očekujte poziv)</p>}
-                                {!error && <h2 className=' font-medium pt-4 text-center'>Ukupna cijena : {ukupna_cijena}KM za {ukupna_cijena/carData.cijena_po_danu} dana</h2>}
+                                {!error && <h2 className=' font-medium pt-4 text-center'>Ukupna cijena : {ukupna_cijena}$ za {ukupna_cijena/carData.cijena_po_danu} dana</h2>}
                                 <h2 className='pt-5 text-center text-sm inline-block'><span className=' font-semibold'>Početni datum : </span> {date1}</h2> <br />
                                 <h2 className='pt-1 text-center text-sm inline-block'> <span className=' font-semibold'>Krajnji datum : </span> {date2}</h2>
                             </div>

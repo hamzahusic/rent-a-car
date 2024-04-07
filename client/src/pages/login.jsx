@@ -42,7 +42,7 @@ const LogIn = () => {
 
        console.log(user)
 
-       navigate("/");
+       navigate(-1);
 
     }
 

@@ -35,7 +35,7 @@ const skillsData = [
 const Services = () => {
   return (
     <>
-      <span id="about"></span>
+      <span></span>
       <div className="dark:bg-black dark:text-white py-14 sm:grid sm:place-items-center">
         <div className="container">
           <div className="pb-12">
