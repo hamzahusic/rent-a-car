@@ -44,8 +44,28 @@ router.post('/',uploadStorage.single("slika"), async (req,res) => {
 
 })
 
+//GET SVE OBJAVE
+router.get('/all', async (req,res) => {
+    try {
+
+        const sql = "SELECT automobil.id,automobil.naziv,automobil.proizvodjac,automobil.mjesta,automobil.transmisija,automobil.pogon,automobil.opis,automobil.slika,automobil.cijena_po_danu, kategorija.naziv as kategorija, kategorija.id as kategorija_id FROM automobil INNER JOIN kategorija ON automobil.kategorija_id = kategorija.id;";
+    
+        mysqlPool.query(sql, (err,result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send('Greška prilikom dobijanja svih automobila');
+            } else {
+                return res.status(200).json({ message: 'Automobil selected successfully', data: result });
+            }
+        })
+    } catch (error) {
+        console.error(err.message);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+})
+
 //JEDAN AUTOMOBIL
-router.get('/car/:id', async (req,res) => {
+router.get('/:id', async (req,res) => {
     try {
         const {id} = req.params;
     
@@ -68,30 +88,10 @@ router.get('/car/:id', async (req,res) => {
     }
 })
 
-//GET SVE OBJAVE
-router.get('/all', async (req,res) => {
-    try {
-
-        const sql = "SELECT automobil.id,automobil.naziv,automobil.proizvodjac,automobil.mjesta,automobil.transmisija,automobil.pogon,automobil.opis,automobil.slika,automobil.cijena_po_danu, kategorija.naziv as kategorija, kategorija.id as kategorija_id FROM automobil INNER JOIN kategorija ON automobil.kategorija_id = kategorija.id;";
-    
-        mysqlPool.query(sql, (err,result) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).send('Greška prilikom dobijanja svih automobila');
-            } else {
-                return res.status(200).json({ message: 'Automobil selected successfully', data: result });
-            }
-        })
-    } catch (error) {
-        console.error(err.message);
-        return res.status(500).json({ message: 'Internal server error' });
-    }
-})
-
 //UPDATE OBJAVU
 router.put('/',uploadStorage.single("slika"), async (req,res) => {
     try {
-        const {idAutomobil,naziv,proizvodjac,mjesta,transmisija,pogon,opis,cijena,idKategorija,idKorisnik} = req.body;
+        const {idAutomobil,naziv,proizvodjac,mjesta,transmisija,pogon,opis,cijena,idKategorija,idKorisnik,stara_slika} = req.body;
         
         if(req.file){
             try {
@@ -123,13 +123,13 @@ router.put('/',uploadStorage.single("slika"), async (req,res) => {
 //DELETE OBJAVU
 router.delete('/', async (req,res) => {
     try {
-        const {id,slika} = req.body;
-    
+        const {id,slika} = req.query;
+        
         const sql = "DELETE FROM automobil WHERE id = ?;";
     
         mysqlPool.query(sql,[id], (err,result) => {
             if (err) {
-                console.error(err);
+                console.log(err);
                 return res.status(500).send('Error deleting objava');
             } else {
                 try {
@@ -141,7 +141,7 @@ router.delete('/', async (req,res) => {
             }
         })
     } catch (error) {
-        console.error(err.message);
+        console.error(error.message);
         return res.status(500).json({ message: 'Internal server error' });
     }
 })

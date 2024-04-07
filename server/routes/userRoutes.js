@@ -62,7 +62,7 @@ router.post("/login", async (req,res) => {
     try {
         const { email, sifra} = req.body;
 
-        const sql = 'SELECT korisnik.idKorisnik,korisnik.ime,korisnik.prezime,korisnik.email,korisnik.sifra,korisnik.uloga FROM korisnik WHERE email = ?';
+        const sql = 'SELECT korisnik.id,korisnik.ime,korisnik.prezime,korisnik.email,korisnik.sifra,korisnik.uloga FROM korisnik WHERE email = ?';
 
         mysqlPool.query(sql, [email], (err, results) => {
             if (err) {

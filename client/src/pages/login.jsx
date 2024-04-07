@@ -1,10 +1,50 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import UserContext from '../context/userContext';
 
 const LogIn = () => {
 
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+
+    const navigate = useNavigate();
+
+    const {user,setUser} = useContext(UserContext)
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        if(!email || !password){
+            alert("Unesite sve informacije!");
+            return;
+       }
+    
+       const request = await fetch('http://localhost:8000/user/login',{
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            "email" : email,
+            "sifra" : password,
+        })
+       })
+    
+       if(!request.ok){
+        alert("Greska prilikom logiranja korisnika")
+        return;
+       }
+
+       const data = await request.json();
+       
+       console.log(data.userInfo);
+       setUser(data.userInfo);
+
+       console.log(user)
+
+       navigate("/");
+
+    }
 
     return ( 
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -14,7 +54,7 @@ const LogIn = () => {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" onSubmit={() => loginUser}>
+                <form className="space-y-6" onSubmit={handleLogin}>
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email</label>
                         <div className="mt-2">

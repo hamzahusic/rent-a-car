@@ -1,7 +1,11 @@
 import React from "react";
 import AboutPng from "../../assets/about-us.jpg";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="bg-black sm:grid sm:place-items-center duration-300 py-20">
       <div className="container">
@@ -24,7 +28,9 @@ const About = () => {
               <p data-aos="fade-up" className="leading-8 tracking-wide">
               Car Rental je specijalizirana kompanija koja se bavi iznajmljivanjem putničkih automobila u cijeloj Bosni i Hercegovini. Na Vaš zahtjev dostavićemo Vam vozilo na bilo koju adresu u Tuzli, a na kraju najma ćemo preuzeti iznajmljeno vozila sa lokacije koja Vama najviše odgovara. I sve to naravno besplatno! Uslugu dostave i preuzimanja pružamo i izvan Tuzle, uz doplatu. Neophodna je rezervacija i dogovor.
               </p>
-              <button data-aos="fade-up" className="button-outline text-white">
+              <button data-aos="fade-up" className="button-outline text-white"
+                onClick={() => navigate('/cars')}
+              >
                 Iznajmite automobil
               </button>
             </div>

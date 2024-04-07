@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiMenuAltRight } from "react-icons/bi";
+import axios from 'axios'
 
-const MobileFilter = () => {
+const MobileFilter = ({carList,setCarList}) => {
 
     const [priceRange,setPriceRange] = useState(0);
     const [category, setCategory] = useState('');
@@ -11,11 +12,54 @@ const MobileFilter = () => {
     const [sort, setSort] = useState('');
     const [hasFilter,setHasFilter] = useState(false);
     const [showMenu,setShowMenu] = useState(false);
+    const [categories,setCategories] = useState([]);
+    const [dataCopy,setDataCopy] = useState(carList);
+    
+    const getCategories = async () => {
+        const request = await axios.get('http://localhost:8000/category/');
+        setCategories(request.data.categories)
+    }
+
+    const handleSort = (name) => {
+        if(name == "Najskuplji"){
+            const sorted = [...carList].sort((a, b) => b.cijena_po_danu - a.cijena_po_danu);
+            setCarList(sorted);
+        }
+        if(name == "Najjeftiniji"){
+            const sorted = [...carList].sort((a, b) => a.cijena_po_danu - b.cijena_po_danu);
+            setCarList(sorted);
+        }
+    }
+
+    const handleFilters = () => {
+        if(hasFilter){
+            setCarList(dataCopy);
+            setHasFilter(false);
+            return;
+        }
+
+        setDataCopy(carList);
+
+        const filteredData = [...carList].filter(
+            car => (priceRange != 0 ? car.cijena_po_danu <= priceRange : true) 
+            && (category != '' ? car.kategorija == category : true)
+            && (transmission != '' ? car.transmisija == transmission : true)
+            && (seats != '' ? car.mjesta == seats : true) 
+            && (wheelDrive != '' ? car.pogon == wheelDrive : true)
+        )
+
+        setCarList(filteredData);
+        setHasFilter(true);
+    }
+
+    useEffect(() => {
+        getCategories();
+    },[])
 
     return ( 
         <div>
             <BiMenuAltRight   className=" text-5xl cursor-pointer ml-auto mb-2 p-2 xl:hidden" onClick={() => setShowMenu(!showMenu)}/>
-            <div className="mb-10">
+            <div className="mb-10 xl:hidden">
                 {showMenu && 
                 <div
                 data-aos="fade-up"  
@@ -31,7 +75,7 @@ const MobileFilter = () => {
                         value={priceRange}
                         onChange={(e) => setPriceRange(e.target.value)}
                         min={0}
-                        max={1000}
+                        max={999}
                         className="accent-red-500"
                     />
                     {/* Vehicle Category */}
@@ -41,10 +85,9 @@ const MobileFilter = () => {
                         className="bg-black border-b border-gray-500 p-2 mb-2"
                     >
                         <option value="">Select Vehicle Category</option>
-                        <option value="sedan">Sedan</option>
-                        <option value="suv">SUV</option>
-                        <option value="truck">Truck</option>
-                        {/* Add more options as needed */}
+                        {categories && categories.map(cat => (
+                            <option value={cat.naziv} key={cat.id}>{cat.naziv}</option>
+                        ))}
                     </select>
 
                     {/* Transmission */}
@@ -54,9 +97,9 @@ const MobileFilter = () => {
                         className="bg-black border-b border-gray-500 p-2 mb-2"
                     >
                         <option value="">Select Transmission</option>
-                        <option value="automatic">Automatic</option>
-                        <option value="manual">Manual</option>
-                        {/* Add more options as needed */}
+                        <option value="Manuelni">Manuelni</option>
+                        <option value="Automatik">Automatik</option>
+                        <option value="Poluautomatik">Poluautomatik</option>
                     </select>
 
                     {/* Seats */}
@@ -69,7 +112,9 @@ const MobileFilter = () => {
                         <option value="2">2</option>
                         <option value="4">4</option>
                         <option value="5">5</option>
-                        {/* Add more options as needed */}
+                        <option value="6">6</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
                     </select>
 
                     {/* Wheel Drive */}
@@ -79,14 +124,14 @@ const MobileFilter = () => {
                         className="bg-black border-b border-gray-500 p-2 mb-2"
                     >
                         <option value="">Select Wheel Drive</option>
-                        <option value="2wd">2WD</option>
-                        <option value="4wd">4WD</option>
-                        {/* Add more options as needed */}
+                        <option value="Prednji">Prednji</option>
+                        <option value="Zadnji">Zadnji</option>
+                        <option value="4x4">4x4</option>
                     </select>
 
                     {/* Clear Filter Button */}
                     <button
-                        onClick={() => handleClearFilters}
+                        onClick={handleFilters}
                         className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
                     >
                         {hasFilter ? "Clear Filters" : "Add Filters"}
@@ -95,14 +140,13 @@ const MobileFilter = () => {
                 <div className=" text-right xl:hidden">
                     <select
                             value={sort}
-                            onChange={(e) => setSort(e.target.value)}
+                            onChange={(e) => handleSort(e.target.value)}
                             data-aos="fade-up"
                             className=" rounded border-[1px]  border-gray-300 py-2 px-3 mb-2"
                         >
                             <option value="" className=" text-gray-300">Sort cars</option>
-                            <option value="2wd">Najskuplji</option>
-                            <option value="4wd">Najjefiniji</option>
-                            {/* Add more options as needed */}
+                            <option value="Najskuplji">Najskuplji</option>
+                            <option value="Najjeftiniji">Najjefiniji</option>
                         </select>
                     </div>
             </div>

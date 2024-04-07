@@ -1,11 +1,16 @@
 import { useEffect } from "react";
 import mainCar from "../../assets/banner-car.jpg";
 import AOS from "aos";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  
+  const navigate = useNavigate();
+
   useEffect(() => {
     AOS.refresh();
   },[]);
+
   return (
     <div className="dark:bg-black dark:text-white duration-300 ">
       <div className="container flex py-10">
@@ -39,7 +44,7 @@ const Hero = () => {
             <button
               data-aos="fade-up"
               data-aos-delay="1500"
-
+              onClick={() => navigate('/cars')}
               className="rounded-md bg-primary hover:bg-primary/80 transition duration-500 py-3 px-6 text-white text-base tracking-wide"
             >
               Iznajmite automobil

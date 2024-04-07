@@ -1,73 +1,36 @@
 import CarList from '../components/CarList/CarList';
 import Navbar from '../components/Navbar/Navbar'
-import whiteCar from "../assets/white-car.png";
-import car2 from "../assets/car5.png";
-import car3 from "../assets/car6.png";
 import Footer from '../components/Footer/Footer';
-
-const carList = [
-    {
-      name: "BMW UX",
-      price: 100,
-      image: whiteCar,
-      aosDelay: "0",
-    },
-    {
-      name: "KIA UX",
-      price: 140,
-      image: car2,
-      aosDelay: "200",
-    },
-    {
-      name: "BMW UX",
-      price: 100,
-      image: car3,
-      aosDelay: "400",
-    },
-      {
-        name: "BMW UX",
-        price: 100,
-        image: whiteCar,
-        aosDelay: "600",
-      },
-      {
-        name: "KIA UX",
-        price: 140,
-        image: car2,
-        aosDelay: "800",
-      },
-      {
-        name: "BMW UX",
-        price: 100,
-        image: car3,
-        aosDelay: "1000",
-      },
-      {
-        name: "BMW UX",
-        price: 100,
-        image: whiteCar,
-        aosDelay: "1200",
-      },
-      {
-        name: "KIA UX",
-        price: 140,
-        image: car2,
-        aosDelay: "1400",
-      },
-      {
-        name: "BMW UX",
-        price: 100,
-        image: car3,
-        aosDelay: "1600",
-      },
-];
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import whiteCar from "../assets/white-car.png";
 
 const AllCars = () => {
+
+    const [carList,setCarList] = useState([
+      {
+        name: "BMW UX",
+        price: 100,
+        image: whiteCar,
+        aosDelay: "0",
+      }
+    ])
+
+    const getCars = async () => {
+      const request = await axios.get('http://localhost:8000/car/all');
+      setCarList(request.data.data);
+    }
+
+    useEffect(() => {
+      window.scrollTo(0, 0)
+      getCars();
+    },[])
+
     return ( 
-        <div className=' '>
+        <div>
             <Navbar/>
             <div className='mt-10'>
-                <CarList showBtn={false} carList={carList}/>
+                <CarList showBtn={false} carList={carList} setCarList={setCarList}/>
             </div>
             <Footer/>
         </div>
