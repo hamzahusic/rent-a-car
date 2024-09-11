@@ -44,6 +44,63 @@ router.post('/',uploadStorage.single("slika"), async (req,res) => {
 
 })
 
+//CHECK AVAILABILITY
+
+router.get('/check/:carId', async (req,res) => {
+    try {
+        const {carId} = req.params;
+
+        const sql = "SELECT * FROM rentacar.iznajmljeni_automobili WHERE car_id=?;"
+
+        mysqlPool.query(sql, [carId], (err,result) => {
+            if(err)
+                return res.status(500).send('Greška prilikom dobijanja automobila');
+
+            if(result.length == 0)
+                return res.status(200).json({message:"Automobil nije iznajmljen"});
+
+            const today = new Date();
+            const datum_isteka = new Date(result[0].kraj_iznajmljivanja);
+
+            if(today>datum_isteka){
+
+                const sqlRemove = "DELETE FROM iznajmljeni_automobili WHERE id = ?;";
+
+                mysqlPool.query(sqlRemove,[carId], (err,result) => {
+                    if(err)
+                        return res.status(500).send('Greška prilikom brisanja automobila iz liste');   
+                })
+
+                return res.status(200).json({message:"Automobil nije iznajmljen"});
+            }
+
+            return res.status(200).json({message:"Automobil je iznajmljen"});
+        })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+})
+
+//RENT A CAR
+router.post('/rent', async (req,res) => {
+    try {
+        const {pocetak_iznajmljivanja,kraj_iznajmljivanja,carId,korisnik_id,ukupna_cijena} = req.body;
+
+        const sql = "INSERT INTO iznajmljeni_automobili (pocetak_iznajmljivanja,kraj_iznajmljivanja,car_id,korisnik_id,ukupna_cijena) VALUES (?,?,?,?,?);"
+
+        mysqlPool.query(sql, [pocetak_iznajmljivanja,kraj_iznajmljivanja,carId,korisnik_id,ukupna_cijena], (err,result) => {
+            if(err)
+                return res.status(500).send('Greška prilikom dobijanja automobila');
+
+            return res.status(200).json({message:"Uspjesno iznajmljen automobil", data:result})
+        })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+})
+
 //GET SVE OBJAVE
 router.get('/all', async (req,res) => {
     try {
