@@ -30,7 +30,7 @@ const CarPost = () => {
     const [date1,setDate1] = useState('');
     const [date2,setDate2] = useState('');
     const [ukupna_cijena,setUkupnaCijena] = useState(0);
-    const [error,setError] = useState(false);
+    const [error,setError] = useState("");
     
     const {user} = useContext(UserContext);
     const navigate = useNavigate();
@@ -41,7 +41,7 @@ const CarPost = () => {
     }
 
     function closeModal() {
-        setError(false);
+        setError("");
         setIsOpen(false);
     }
 
@@ -51,7 +51,7 @@ const CarPost = () => {
         setCarData(request.data.data[0]);
     }
 
-    const handleRent = () => {
+    const handleRent = async () => {
 
         if(date1=='' || date2 =='') return;
 
@@ -62,13 +62,37 @@ const CarPost = () => {
 
         const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
 
-        if(secondDate<firstDate){
-            setError(true);
+        if( secondDate < firstDate ){
+            setError("Izaberite validne datume!");
             openModal();
             return;
         }
 
-        setUkupnaCijena(diffDays * carData.cijena_po_danu);
+        const isAvailable = await axios.get(`http://localhost:8000/car/check/${carData.id}`)
+
+        console.log(carData.id)
+        console.log(isAvailable)
+
+        if(isAvailable.data.message != "Automobil nije iznajmljen"){
+            setError("Automobil trenutno nije na stanju, izberite drugi automobil!");
+            openModal();
+            return
+        }
+
+        const ukupnaCijena = diffDays * carData.cijena_po_danu;
+
+        const rentCar = await axios.post(`http://localhost:8000/car/rent`,
+            {
+                "pocetak_iznajmljivanja":date1,
+                "kraj_iznajmljivanja":date2,
+                "carId":carData.id,
+                "korisnik_id":user.id,
+                "ukupna_cijena":ukupnaCijena
+            }
+        )
+
+
+        setUkupnaCijena(ukupnaCijena);
         openModal();
     }
 
@@ -135,7 +159,7 @@ const CarPost = () => {
                             <div>
                                 {!error && <FaRegCheckCircle size={110} className=' text-green-500 text-center w-full'/>}
                                 {error && <VscError  size={110} className=' text-red-500 text-center w-full'/>}
-                                <h2 className=' font-semibold pt-4 text-xl'>{error ? "Unesite validne datume!" :"Uspješno iznajmljen automobil!"} </h2>
+                                <h2 className=' font-semibold pt-4 text-xl'>{error ? error :"Uspješno iznajmljen automobil!"} </h2>
                                 {!error && <p className=' text-sm text-center'>(Uskoro očekujte poziv)</p>}
                                 {!error && <h2 className=' font-medium pt-4 text-center'>Ukupna cijena : {ukupna_cijena}$ za {ukupna_cijena/carData.cijena_po_danu} dana</h2>}
                                 <h2 className='pt-5 text-center text-sm inline-block'><span className=' font-semibold'>Početni datum : </span> {date1}</h2> <br />
