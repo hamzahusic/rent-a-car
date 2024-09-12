@@ -46,9 +46,9 @@ router.post('/',uploadStorage.single("slika"), async (req,res) => {
 
 //CHECK AVAILABILITY
 
-router.get('/check/:carId', async (req,res) => {
+router.post('/check', async (req,res) => {
     try {
-        const {carId} = req.params;
+        const {carId,datumNovogPocetka} = req.body;
 
         const sql = "SELECT * FROM rentacar.iznajmljeni_automobili WHERE car_id=?;"
 
@@ -59,12 +59,13 @@ router.get('/check/:carId', async (req,res) => {
             if(result.length == 0)
                 return res.status(200).json({message:"Automobil nije iznajmljen"});
 
-            const today = new Date();
-            const datum_isteka = new Date(result[0].kraj_iznajmljivanja);
+            const datum_novog_pocetka = new Date(datumNovogPocetka).setHours(0,0,0,0);
+            const datum_isteka = new Date(result[0].kraj_iznajmljivanja).setHours(0,0,0,0);;
+            const today = new Date().setHours(0,0,0,0)
 
-            if(today>datum_isteka){
+            if(datum_novog_pocetka > datum_isteka && today > datum_isteka){
 
-                const sqlRemove = "DELETE FROM iznajmljeni_automobili WHERE id = ?;";
+                const sqlRemove = "DELETE FROM rentacar.iznajmljeni_automobili WHERE car_id = ?;";
 
                 mysqlPool.query(sqlRemove,[carId], (err,result) => {
                     if(err)

@@ -62,13 +62,16 @@ const CarPost = () => {
 
         const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
 
-        if( secondDate < firstDate ){
+        if( secondDate < firstDate || date1 == date2){
             setError("Izaberite validne datume!");
             openModal();
             return;
         }
 
-        const isAvailable = await axios.get(`http://localhost:8000/car/check/${carData.id}`)
+        const isAvailable = await axios.post(`http://localhost:8000/car/check/`,{
+            "carId":carData.id,
+            "datumNovogPocetka":date1
+        })
 
         console.log(carData.id)
         console.log(isAvailable)
@@ -81,7 +84,7 @@ const CarPost = () => {
 
         const ukupnaCijena = diffDays * carData.cijena_po_danu;
 
-        const rentCar = await axios.post(`http://localhost:8000/car/rent`,
+        await axios.post(`http://localhost:8000/car/rent`,
             {
                 "pocetak_iznajmljivanja":date1,
                 "kraj_iznajmljivanja":date2,
