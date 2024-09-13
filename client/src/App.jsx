@@ -12,6 +12,7 @@ import CarPost from "./pages/car";
 import AddCarForm from "./pages/AddCar";
 import EditCarForm from "./pages/EditCar";
 import UserContext from "./context/userContext";
+import RentedCars from "./pages/RentedCars";
 const App = () => {
 
   useEffect(() => {
@@ -38,6 +39,7 @@ const App = () => {
             <Route path="/car/:id" element={<CarPost />} />
             <Route path="/admin/add" element={<AddCarForm />} />
             <Route path="/admin/edit/:id" element={<EditCarForm />} />
+            <Route path="/admin/rentedcars" element={<RentedCars />} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

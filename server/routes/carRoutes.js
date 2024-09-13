@@ -102,6 +102,25 @@ router.post('/rent', async (req,res) => {
     }
 })
 
+//GET ALL RENTED CARS
+
+router.get('/allrentedcars', async (req,res) => {
+
+    try {
+        const sql = "SELECT iznajmljeni_automobili.id,iznajmljeni_automobili.pocetak_iznajmljivanja, iznajmljeni_automobili.kraj_iznajmljivanja, iznajmljeni_automobili.ukupna_cijena, automobil.naziv, automobil.slika, korisnik.ime, korisnik.prezime, korisnik.email FROM rentacar.iznajmljeni_automobili INNER JOIN rentacar.automobil ON iznajmljeni_automobili.car_id = automobil.id INNER JOIN rentacar.korisnik ON iznajmljeni_automobili.korisnik_id = korisnik.id;"
+    
+        mysqlPool.query(sql, (err,result) => {
+            if(err)
+                return res.status(500).send('Greška prilikom dobijanja iznajmljenih automobila');
+
+            return res.status(200).json({ message: 'Iznajmljeni automobili', data: result });
+        })
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+
+})
+
 //GET SVE OBJAVE
 router.get('/all', async (req,res) => {
     try {

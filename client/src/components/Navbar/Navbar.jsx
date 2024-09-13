@@ -23,7 +23,7 @@ const Navbar = () => {
             <span className="text-3xl font-bold font-serif">Car Rental</span>
           </Link>
           <nav className="hidden lg:block">
-            <ul className="flex items-center gap-8">
+            <ul className="flex items-center gap-4 xl:gap-8">
               <li className="py-4">
                   <Link
                     to={"/"}
@@ -59,6 +59,15 @@ const Navbar = () => {
                     className=" text-lg font-medium  hover:text-primary py-2 hover:border-b-2 hover:border-primary transition-colors duration-500"
                   >
                     Dodaj Automobili
+                  </Link>
+              </li>}
+              {Object.keys(user).length !== 0 && user.uloga === "admin" && <li className="py-4">
+                  <Link
+                    to={"/admin/rentedcars"}
+                    onClick={toggleMenu}
+                    className=" text-lg font-medium  hover:text-primary py-2 hover:border-b-2 hover:border-primary transition-colors duration-500"
+                  >
+                    Iznajmljeni Automobili
                   </Link>
               </li>}
 
